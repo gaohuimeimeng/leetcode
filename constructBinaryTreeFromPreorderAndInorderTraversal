@@ -1,0 +1,25 @@
+class Solution {
+public:
+    TreeNode *findSubTree(int pre_start,int in_start,int len,vector<int> &preorder,vector<int> &inorder){
+
+        if(len<=0)
+            return NULL;
+        TreeNode *root=new TreeNode(preorder[pre_start]);
+        int i=in_start;
+
+        while(i<in_start+len&&inorder[i]!=preorder[pre_start]){
+            i++;
+        }
+        root->left=findSubTree(pre_start+1,in_start,i-in_start,preorder,inorder);
+        root->right=findSubTree(pre_start+i+1-in_start,i+1,len-(i-in_start+1),preorder,inorder);
+        return root;
+    }
+    TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder) {
+
+        TreeNode *res;
+
+        res=findSubTree(0,0,inorder.size(),preorder,inorder);
+        return res;
+       
+    }
+};
