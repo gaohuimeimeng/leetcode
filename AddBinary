@@ -1,0 +1,40 @@
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        int len_a=a.size()-1;
+        int len_b=b.size()-1;
+        int carry=0;
+        int sum=0;
+        string temp;
+        int index=0;
+        while(len_a>=0||len_b>=0||sum){
+            if(len_a>=0){
+                if(a[len_a]=='1')
+                    sum++;
+                len_a--;
+            }
+            if(len_b>=0){
+                if(b[len_b]=='1')
+                    sum++;
+                len_b--;
+            }
+            if(sum>=2)
+                carry=1;
+            if(sum%2)
+                temp.append("1");
+            else
+                temp.append("0");
+
+            sum=carry;
+            carry=0;
+        }
+        int l=temp.length();
+        for(int i=0;i<l/2;i++)
+        {
+            char c=temp[i];
+            temp[i]=temp[l-1-i];
+            temp[l-1-i]=c;
+        }
+        return temp;
+    }
+};
