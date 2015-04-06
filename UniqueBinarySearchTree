@@ -1,0 +1,93 @@
+class Solution {
+public:
+    vector<TreeNode *> generateSubTrees(int low,int high){
+
+        vector<TreeNode *> res;
+        if(low==high){
+            TreeNode *root=new TreeNode(low);
+            res.push_back(root);
+            return res;
+        }
+        vector<TreeNode *> left;
+        vector<TreeNode *> right;
+        
+        for(int i=low;i<=high;i++){
+            if(low<i)
+                left=generateSubTrees(low,i-1);
+            if(high>i)
+                right=generateSubTrees(i+1,high);
+            if(i==low){
+                for(int m=0;m<right.size();m++){
+                    TreeNode * root=new TreeNode(low);
+                    root->right=right[m];
+                    res.push_back(root);
+                }
+            }
+            else if(i==high){
+                for(int j=0;j<left.size();j++){
+                    TreeNode *root=new TreeNode(high);
+                    root->left=left[j];
+                    res.push_back(root);
+                }
+            }
+            else {
+            for(int j=0;j<=left.size();j++){
+                for(int m=0;m<right.size();m++){
+                    TreeNode * root= new TreeNode(i);
+                    root->left=left[j];
+                    root->right=right[m];
+                    res.push_back(root);
+                }
+            }
+          }
+           
+        }
+         return res;
+    }
+    vector<TreeNode *> generateTrees(int n) {
+        vector<TreeNode *> res;
+        vector<TreeNode *> left;
+        vector<TreeNode *> right;
+        if(n==0){
+            res.push_back(NULL);
+            return res;
+        }
+        if(n==1){
+            TreeNode * root=new TreeNode(1);
+            res.push_back(root);
+            return res;
+        }
+        for(int i=1;i<=n;i++){
+            if(i>1)
+                left=generateSubTrees(1,i-1);
+            if(i<n)
+                right=generateSubTrees(i+1,n);
+
+            if(i==1){
+                for(int m=0;m<right.size();m++){
+                    TreeNode * root=new TreeNode(1);
+                    root->right=right[m];
+                    res.push_back(root);
+                }
+            }
+            else if(i==n){
+                for(int j=0;j<left.size();j++){
+                    TreeNode *root=new TreeNode(n);
+                    root->left=left[j];
+                    res.push_back(root);
+                }
+            }
+            else{
+                for(int j=0;j<left.size();j++){
+                    for(int m=0;m<right.size();m++){
+                        TreeNode * root= new TreeNode(i);
+                        root->left=left[j];
+                        root->right=right[m];
+                        res.push_back(root);
+                    }
+                }
+            }
+        }
+        return res;
+    }
+};
