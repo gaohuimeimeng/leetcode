@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<TreeNode *> generateSubTrees(int low,int high){
+
+        vector<TreeNode *> res;
+        vector<TreeNode *> left;
+        vector<TreeNode *> right;
+        if(low>high){
+            res.push_back(NULL);
+            return res;
+        }
+        for(int i=low;i<=high;i++){
+                left=generateSubTrees(low,i-1);
+                right=generateSubTrees(i+1,high);
+
+            for(int j=0;j<=left.size();j++){
+                for(int m=0;m<right.size();m++){
+                    TreeNode * root= new TreeNode(i);
+                    root->left=left[j];
+                    root->right=right[m];
+                    res.push_back(root);
+                }
+            }
+        }
+         return res;
+    }
+    vector<TreeNode *> generateTrees(int n) {
+        return generateSubTrees(1,n);
+    }
+};
