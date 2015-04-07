@@ -1,0 +1,28 @@
+    string convert(string s, int nRows) {
+        string res=s;
+        if(nRows==1)
+            return s;
+        
+        int r=0;
+        int l=2*(nRows-1);
+        int cnt=0;
+        int n=s.size();
+        
+        for(int i=0;i<nRows&&i<n;i++){
+            int j=i;
+            res[cnt++]=s[j];
+            while(j<n){
+                j+=l;
+                if(j&&j<n){
+                    res[cnt++]=s[j];
+                }
+                j+=r;
+                if(r&&j<n){
+                    res[cnt++]=s[j];
+                }
+                l-=2;
+                r+=2;
+            }
+        }
+        return res;
+    }
