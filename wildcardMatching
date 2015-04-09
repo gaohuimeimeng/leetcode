@@ -1,0 +1,19 @@
+const char *sBackup=NULL,*pBackup=NULL;
+        while(*s != '\0'){
+            if(*p =='*'){
+                while(*p == '*') p++;
+                if(*p == '\0')
+                    return true;
+                sBackup = s;
+                pBackup = p;
+            }
+            if(*p=='?'||*p==*s){
+                s++;p++;
+            }else{
+                if(!sBackup) return false;
+                s=++sBackup;
+                p=pBackup;
+            }
+            while(*p == '*') ++p;
+            return *s == '\0' && *p == '\0';
+        }
